@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+/* Dark mode follows the data-theme attribute set in the layout's inline script. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---------- Colour tokens ----------
+ * A warm, editorial palette (off-white paper, near-black ink, deep olive
+ * accent) in the spirit of Squarespace's template showcase colours.
+ */
+:root {
+  --paper: #f5f5f4;
+  --paper-raised: #ffffff;
+  --ink: #1d191d;
+  --muted: #7a6b5e;
+  --rule: #e4dfda;
+  --accent: #3e4336;
+  --accent-soft: #e3e6dd;
+  --on-accent: #f5f5f4;
+  --todo: #8a5a00;
+  --todo-bg: #fbf6ea;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #141311;
+    --paper-raised: #1d1b18;
+    --ink: #f2efea;
+    --muted: #b2a99d;
+    --rule: #332f2a;
+    --accent: #a8be98;
+    --accent-soft: #262b20;
+    --on-accent: #1a1e16;
+    --todo: #e6bd6a;
+    --todo-bg: #2a2416;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #141311;
+  --paper-raised: #1d1b18;
+  --ink: #f2efea;
+  --muted: #b2a99d;
+  --rule: #332f2a;
+  --accent: #a8be98;
+  --accent-soft: #262b20;
+  --on-accent: #1a1e16;
+  --todo: #e6bd6a;
+  --todo-bg: #2a2416;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-raised: var(--paper-raised);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-todo: var(--todo);
+  --color-todo-bg: var(--todo-bg);
+
+  --font-sans: "Schibsted Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Newsreader Variable", ui-serif, Georgia, serif;
+}
+
+/* ---------- Base ---------- */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem; /* 17px */
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Underlined text links: quiet by default, accent on hover. */
+.link {
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.22em;
+  transition: text-decoration-color 150ms ease, color 150ms ease;
+}
+.link:hover {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+
+/* Long-form reading text on case studies. */
+.prose-serif {
+  font-family: var(--font-serif);
+  font-size: 1.1875rem; /* 19px */
+  line-height: 1.7;
+  font-variation-settings: "opsz" 16;
+}
+.prose-serif p + p {
+  margin-top: 1em;
+}
+
+/* ---------- The one orchestrated moment: hero load ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: rise 700ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+    animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+  }
+}
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Print (resume page) ---------- */
+@media print {
+  :root,
+  :root[data-theme="dark"] {
+    --paper: #ffffff;
+    --ink: #000000;
+    --muted: #333333;
+    --rule: #cccccc;
+    --accent: #3e4336;
+  }
+  body {
+    font-size: 10.5pt;
+  }
+  .no-print {
+    display: none !important;
+  }
+  a {
+    text-decoration: none;
+  }
+}
